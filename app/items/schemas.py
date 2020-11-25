@@ -7,7 +7,7 @@ from pydantic import BaseModel
 
 
 class Item(BaseModel):
-    id: str
+    id: int
     name: str
     description: str
     plaintext: str
@@ -17,10 +17,11 @@ class Item(BaseModel):
         orm_mode = True
         schema_extra = {
             "example": {
+                "id": 1001,
                 "name": "Boots",
                 "description": "<mainText><stats><attention> 25</attention> Move Speed</stats></mainText><br>",
                 "plaintext": "Slightly increases Movement Speed",
-                "image": {"full": "1001.png"},
+                "image": "http://ddragon.leagueoflegends.com/cdn/10.24.1/img/item/1001.png",
             },
         }
 
