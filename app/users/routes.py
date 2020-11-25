@@ -4,5 +4,5 @@ router = APIRouter()
 
 
 @router.get("/")
-def home_page():
-    return {"hello": "user"}
+def get_users():
+    return [{"hello": "number_1"}]

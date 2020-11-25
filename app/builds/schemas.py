@@ -1,29 +1,21 @@
-from typing import Dict
+from typing import List
 
+from app.items.schemas import Item
 from pydantic import BaseModel
 
 
-class Image(BaseModel):
-    full: str
-
-
-class Item(BaseModel):
+class Build(BaseModel):
+    id: int
     name: str
     description: str
-    plaintext: str
-    image: Image
-    # tags: str
-    class Config:
-        schema_extra = {
-            "example": {
-                "name": "Boots",
-                "description": "<mainText><stats><attention> 25</attention> Move Speed</stats></mainText><br>",
-                "plaintext": "Slightly increases Movement Speed",
-                "image": {"full": "1001.png"},
-            },
-        }
+    items: List[Item]
 
-
-class ItemsData(BaseModel):
-    id: str
-    item: Item
+    # class Config:
+    #     schema_extra = {
+    #         "example": {
+    #             "name": "Boots",
+    #             "description": "<mainText><stats><attention> 25</attention> Move Speed</stats></mainText><br>",
+    #             "plaintext": "Slightly increases Movement Speed",
+    #             "image": {"full": "1001.png"},
+    #         },
+    #     }
