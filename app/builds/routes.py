@@ -1,9 +1,8 @@
 from typing import Dict, List
 
 import requests
+from app.builds.schemas import ItemsData
 from fastapi import APIRouter, Depends
-
-from builds.schemas import ItemsData
 
 router = APIRouter()
 

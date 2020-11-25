@@ -1,11 +1,15 @@
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from builds.routes import router as builds_router
-from items.routes import router as items_router
-from users.routes import router as users_router
+from app.builds.routes import router as builds_router
+from app.items.routes import router as items_router
+from app.users.routes import router as users_router
+
+load_dotenv()
 
 app = FastAPI()
+
 
 origins = ["http://localhost:3000"]
 
