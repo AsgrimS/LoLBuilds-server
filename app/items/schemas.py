@@ -1,9 +1,4 @@
-from typing import Dict
-
 from pydantic import BaseModel
-
-# class Image(BaseModel):
-#     full: str
 
 
 class Item(BaseModel):
@@ -24,8 +19,3 @@ class Item(BaseModel):
                 "image": "http://ddragon.leagueoflegends.com/cdn/10.24.1/img/item/1001.png",
             },
         }
-
-
-# class ItemsData(BaseModel):
-#     id: str
-#     item: Item

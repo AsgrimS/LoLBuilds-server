@@ -18,4 +18,5 @@ class Build(Base):
     name = Column(String)
     description = Column(String)
 
+    user_id = Column(Integer, ForeignKey("users.id"))
     items = relationship("Item", secondary=builditems_table)
