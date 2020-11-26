@@ -8,14 +8,11 @@ class Build(BaseModel):
     id: int
     name: str
     description: str
-    items: List[Item]
+    items: List[int] = []
 
-    # class Config:
-    #     schema_extra = {
-    #         "example": {
-    #             "name": "Boots",
-    #             "description": "<mainText><stats><attention> 25</attention> Move Speed</stats></mainText><br>",
-    #             "plaintext": "Slightly increases Movement Speed",
-    #             "image": {"full": "1001.png"},
-    #         },
-    #     }
+    class Config:
+        orm_mode = True
+
+
+class BuildResponse(Build):
+    items: List[Item] = []

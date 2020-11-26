@@ -18,6 +18,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(builds_router, tags=["builds"])
+app.include_router(builds_router, prefix="/builds", tags=["builds"])
 app.include_router(items_router, prefix="/items", tags=["items"])
 app.include_router(users_router, prefix="/users", tags=["users"])
