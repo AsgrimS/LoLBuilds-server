@@ -2,7 +2,7 @@ from enum import unique
 
 from app.db.database import Base
 from sqlalchemy import Column, Integer, String
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import backref, relationship
 
 
 class User(Base):
@@ -13,4 +13,4 @@ class User(Base):
     name = Column(String, unique=True, index=True)
     password = Column(String)
 
-    builds = relationship("Build")
+    builds = relationship("Build", cascade="all, delete-orphan")

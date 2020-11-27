@@ -1,11 +1,18 @@
-from typing import Any, List
+from typing import List
 
+from app.builds.models import BuildItem
 from app.items.schemas import Item
-from pydantic import BaseModel
+from pydantic.main import BaseModel
+
+
+class BuildItem(BaseModel):
+    item: Item
+
+    class Config:
+        orm_mode = True
 
 
 class Build(BaseModel):
-    id: int
     name: str
     description: str
     user_id: int
@@ -16,4 +23,5 @@ class Build(BaseModel):
 
 
 class BuildResponse(Build):
-    items: List[Item] = []
+    id: int
+    items: List[BuildItem] = []

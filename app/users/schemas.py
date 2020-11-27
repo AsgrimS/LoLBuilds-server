@@ -5,7 +5,6 @@ from pydantic import BaseModel, EmailStr
 
 
 class User(BaseModel):
-    id: int
     email: EmailStr
     name: str
     password: str
@@ -13,3 +12,7 @@ class User(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class UserResponse(User):
+    id: int
