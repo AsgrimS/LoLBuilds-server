@@ -2,6 +2,7 @@ from typing import List
 
 from app.builds.models import BuildItem
 from app.items.schemas import Item
+from fastapi.param_functions import Depends
 from pydantic.main import BaseModel
 
 

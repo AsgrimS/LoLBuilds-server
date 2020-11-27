@@ -1,5 +1,3 @@
-from enum import unique
-
 from app.db.database import Base
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import backref, relationship
