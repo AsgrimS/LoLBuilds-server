@@ -14,13 +14,17 @@ from sqlalchemy.orm import Session
 router = APIRouter()
 
 
-@router.get("/", response_model=List[BuildResponse])
+@router.get("/", response_model=List[BuildResponse], response_model_exclude_none=True)
 def get_builds(db: Session = Depends(get_db)):
     builds = db.query(BuildModel).all()
     return builds
 
 
-@router.get("/{name}/builds", response_model=List[BuildResponse])
+@router.get(
+    "/{name}/builds",
+    response_model=List[BuildResponse],
+    response_model_exclude_none=True,
+)
 def get_user_builds(name: str, db: Session = Depends(get_db)):
     user = db.query(User).filter_by(name=name).first()
     if not user:
@@ -42,10 +46,11 @@ def create_build(
         name=build.name, description=build.description, user_id=current_user.id
     )
     item_list = []
-    for item_id in build.items:
-        db_item = db.query(Item).get(item_id)
-        build_item = BuildItem(item=db_item)
-        item_list.append(build_item)
+    for item in build.items:
+        for item_id, item_comment in item.items():
+            db_item = db.query(Item).get(int(item_id))
+            build_item = BuildItem(item=db_item, comment=item_comment)
+            item_list.append(build_item)
     new_build.items = item_list
 
     db.add(new_build)
