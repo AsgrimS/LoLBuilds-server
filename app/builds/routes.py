@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from app.builds.models import Build as BuildModel
 from app.builds.models import BuildItem
@@ -15,24 +15,19 @@ router = APIRouter()
 
 
 @router.get("/", response_model=List[BuildResponse], response_model_exclude_none=True)
-def get_builds(db: Session = Depends(get_db)):
-    builds = db.query(BuildModel).all()
-    return builds
+def get_builds(user_parram: Optional[str] = None, db: Session = Depends(get_db)):
+    if user_parram:
+        user = db.query(User).filter_by(name=user_parram).first()
+        if not user:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="User not found",
+            )
+        builds = db.query(BuildModel).filter_by(user=user).all()
 
+    else:
+        builds = db.query(BuildModel).all()
 
-@router.get(
-    "/{name}/builds",
-    response_model=List[BuildResponse],
-    response_model_exclude_none=True,
-)
-def get_user_builds(name: str, db: Session = Depends(get_db)):
-    user = db.query(User).filter_by(name=name).first()
-    if not user:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="User not found",
-        )
-    builds = db.query(BuildModel).filter_by(user=user).all()
     return builds
 
 
