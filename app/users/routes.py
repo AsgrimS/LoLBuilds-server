@@ -21,8 +21,8 @@ from sqlalchemy.orm import Session
 router = APIRouter()
 
 
-@router.get("/me")
-async def test(current_user: UserResponse = Depends(get_current_user)):
+@router.get("/me", response_model=UserResponse)
+async def get_me(current_user: UserModel = Depends(get_current_user)):
     return current_user
 
 
@@ -67,8 +67,18 @@ def create_user(user: UserSchema, db: Session = Depends(get_db)):
 
 
 @router.delete("/{user_id}", response_model=Union[UserResponse])
-def remove_user(user_id: int, db: Session = Depends(get_db)):
+def remove_user(
+    user_id: int,
+    current_user: UserModel = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    if not current_user.is_admin:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Admin permission required"
+        )
+
     user = db.query(UserModel).get(user_id)
+
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="User not found"

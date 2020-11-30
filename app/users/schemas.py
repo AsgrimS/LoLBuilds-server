@@ -4,15 +4,19 @@ from app.builds.schemas import BuildResponse
 from pydantic import BaseModel, EmailStr
 
 
-class User(BaseModel):
+class UserBase(BaseModel):
     email: EmailStr
     name: str
-    password: str
-    builds: List[BuildResponse] = []
 
     class Config:
         orm_mode = True
 
 
-class UserResponse(User):
+class User(UserBase):
+    password: str
+
+
+class UserResponse(UserBase):
     id: int
+    is_admin: bool
+    builds: List[BuildResponse] = []

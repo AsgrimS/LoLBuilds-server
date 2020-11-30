@@ -1,5 +1,3 @@
-from ast import Str
-
 from app.db.database import Base
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
@@ -14,6 +12,7 @@ class Build(Base):
     description = Column(String)
 
     user_id = Column(Integer, ForeignKey("users.id"))
+    user = relationship("User", back_populates="builds")
     items = relationship("BuildItem", cascade="all, delete")
 
 
